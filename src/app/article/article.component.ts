@@ -30,7 +30,7 @@ export class ArticleComponent implements OnDestroy {
         this.loading = true;
         this.articleService.getArticle(this.id).subscribe(res => {
             this.data = res[0];
-            this.data['html'] = this.parseHtmlEntities(this.data['html']).replace(/https:\/\/www.eonline.com\/news/g, 'article');
+            this.data['html'] = this.parseHTML(this.data['html']);
             this.loading = false;
             let related = this.data['related'].split('latest.xml?category=')[1];
             if(related.length>0)
@@ -49,6 +49,27 @@ export class ArticleComponent implements OnDestroy {
 
     ngOnDestroy() {
         this.meta.removeTag('name="twitter:image"');
+    }
+
+    parseHTML(html){
+      html =  this.parseHtmlEntities(this.data['html']);
+      var regex = /href\s*=\s*(['"])(https?:\/\/.+?)\1/ig;   
+      var link;
+      
+      while((link = regex.exec(html)) !== null) {
+        let anchor = link[2];
+        console.log(link)
+        if(anchor.match('eonline.com')){
+           let reg = /(\/\d+(\.\d)*)/gi;
+           let id = anchor.match(reg)[0];
+           let slug = anchor.split(id)[1];
+           html = html.replace(anchor, 'article'+id + slug);
+        }
+      }
+
+      return html;
+      
+      //.replace(/https:\/\/www.eonline.com\/news/g, 'article');
     }
  
     parseHtmlEntities(str) {
@@ -79,9 +100,8 @@ export class ArticleComponent implements OnDestroy {
            window.open(link);
         else{
             e.target['target']="_self";
-            let sitelink = link.split('/article/')[1];
-             if(!sitelink) sitelink = link.split('/post/')[1];
-            c.route.navigateByUrl('article/' + sitelink);
+            let link = e.target['href'].replace(window.location.origin, '');
+            c.route.navigateByUrl(link);
             window.scroll({
                 top: 0, 
                 left: 0, 
@@ -90,6 +110,7 @@ export class ArticleComponent implements OnDestroy {
         }
          e.preventDefault();
          e.stopPropagation();
+         return false;
        });
     })
     }

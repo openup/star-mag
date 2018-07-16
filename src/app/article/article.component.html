@@ -5,7 +5,9 @@
 
 <article class="animated fadeIn article" [hidden]="loading" *ngIf="data">
 <h1 [title]="data['title']" [innerHTML]="data['title']"></h1>
+<div class="img-responsive block t-a c">
 <img [src]="data['image']" [attr.alt]="data['title']" />
+</div>
 <!-- StarMag Responsive -->
 <div class="block t-a c" ngNonBindable id="googleAds">
 <ins class="adsbygoogle" style="display:block" 
