@@ -5,7 +5,9 @@
         
 <div *ngFor="let art of data; let i = index;" [ngClass]="i%2?'fadeInRight':'fadeInLeft'" class="article-single animated">
         <h2><a (click)="scrollTop()" [title]="art.title" [innerHTML]="art.title" [routerLink]="['/article', art.id, art.slug]"></a></h2>
-        <img [src]="art.thumb" />
+        <a (click)="scrollTop()" [title]="art.title" [routerLink]="['/article', art.id, art.slug]">
+                <img [src]="art.thumb" [alt]="art.title" />
+        </a>
         <p [innerHTML]="art.description"></p>
 </div>
 

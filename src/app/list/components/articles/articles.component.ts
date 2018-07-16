@@ -48,7 +48,7 @@ export class ArticlesComponent implements OnInit {
         this.data = [];
         this.listService.getList(this.page, this.q).subscribe((res) => {
             this.data = res.map((obj) => {
-                obj.thumb = obj.thumb.replace('$width', 320).replace('$height', 280);
+                obj.thumb = obj.thumb.replace('$width', 420).replace('$height', 360);
                 obj['slug'] = obj.title.toLowerCase().replace(/[^a-z0-9]+|\s+/gmi, " ").trim().replace(/ /g, '-')
                 return obj;
             });
