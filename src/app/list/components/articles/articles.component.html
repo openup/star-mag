@@ -1,0 +1,15 @@
+<div class="loading-block  block t-a c animated fadeIn" *ngIf="loading">
+        <span class="loading m-3 small">
+                <span class="spinner dark"></span>Loading ...</span>
+        </div>
+        
+<div *ngFor="let art of data; let i = index;" [ngClass]="i%2?'fadeInRight':'fadeInLeft'" class="article-single animated">
+        <h2><a (click)="scrollTop()" [title]="art.title" [innerHTML]="art.title" [routerLink]="['/article', art.id, art.slug]"></a></h2>
+        <img [src]="art.thumb" />
+        <p [innerHTML]="art.description"></p>
+</div>
+
+<div *ngIf="!loading" class="pagination animated fadeIn">
+     <a class="t-a c" (click)="scrollTop()" [class.disabled]="previousIsDisabled" [routerLink]="[path, 'p', previouspage]" title="page {{previouspage}}">Previous</a>
+     <a class="t-a c" (click)="scrollTop()" [class.disabled]="nextIsDisabled" [routerLink]="[path, 'p', nextpage]" title="page {{nextpage}}">Next</a>
+</div>

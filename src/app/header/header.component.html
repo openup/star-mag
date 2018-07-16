@@ -1,0 +1,19 @@
+<nav [class.open]="showmenu">
+    <button type="button" (click)="showmenu=!showmenu">
+        <span class="s1"></span>
+        <span class="s2"></span>
+        <span class="s3"></span>
+    </button>
+	<a [routerLinkActive]="['active']" [routerLink]="['/']">Home</a>
+	<a [routerLinkActive]="['active']" [routerLink]="['category/movies']">Movies</a>
+	<a [routerLinkActive]="['active']" [routerLink]="['category/music']">Music</a>
+	<a [routerLinkActive]="['active']" [routerLink]="['category/tv']">Tv</a>
+	<a [routerLinkActive]="['active']" [routerLink]="['category/fashion']">Fashion</a>
+</nav>
+
+<header>
+<form #f="ngForm" (ngSubmit)="Submit(f)" novalidate  autocomplete="off">
+        <button type="submit">search</button>
+    <input type="text" name="q" autocomplete="off" ngModel />
+</form>
+</header>

@@ -1,0 +1,17 @@
+<div class="loading-block  block t-a c animated fadeIn" *ngIf="loading">
+<span class="loading m-3 small">
+        <span class="spinner dark"></span>Loading ...</span>
+</div>
+
+<article class="animated fadeIn article" [hidden]="loading" *ngIf="data">
+<h1 [title]="data['title']" [innerHTML]="data['title']"></h1>
+<img [src]="data['image']" [attr.alt]="data['title']" />
+<!-- StarMag Responsive -->
+<div class="block t-a c" ngNonBindable id="googleAds">
+<ins class="adsbygoogle" style="display:block" 
+     data-ad-client="ca-pub-1124828165040329" 
+     data-ad-slot="8700417336" 
+     data-ad-format="auto"></ins>
+</div>
+<div [innerHTML]="data['html']" class="t-a j article-body"></div>
+</article>
