@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
     constructor(public router : Router, private elem : ElementRef){}
 
     Submit(f: NgForm) {
-        let q = f.value.q.replace(' ', '_').toLowerCase();
+        let q = f.value.q.trim().replace(/[^a-z0-9]+|\s+/gmi, "_").toLowerCase();
         this.router.navigate(['/', 'tag', q]);
     }
 
