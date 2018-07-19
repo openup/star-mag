@@ -13,6 +13,8 @@
 
 <header>
 <form #f="ngForm" (ngSubmit)="Submit(f)" novalidate  autocomplete="off">
+        <a title="Home Page | Star Mag" [routerLinkActive]="['active']" [routerLink]="['/']" class="site-title"><strong>StarMag</strong>
+        </a>
         <button type="submit">search</button>
     <input type="text" name="q" autocomplete="off" ngModel />
 </form>

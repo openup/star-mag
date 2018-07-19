@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Pattaya|Work+Sans:400,200,300);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Saira+Condensed|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
 @import 'assets/stylesheets/animations.scss';
 html,
 body {
@@ -44,6 +45,17 @@ button {
                 padding: 0 12px;
                 background-color: #f8f8f8;
                 float: right;
+                transition: .3s;
+                &.site-title {
+                    float: left;
+                    color: #fff;
+                    background: inherit;
+                    font-size: 22px;
+                    line-height: 29px;
+                    margin-left: 22px;
+                    text-decoration: none;
+                    
+                }
                 &[name="q"] {
                     border-radius: 4px 0 0 4px;
                     text-align: center;
@@ -59,6 +71,15 @@ button {
                     background-position: 0 0;
                     background-size: 1px 100%;
                     background-repeat: no-repeat;
+                }
+
+                @media(max-width: 480px) {
+                    &.site-title{
+                    font-size:16px;
+                    }
+                    &[name="q"] {
+                        max-width: 120px;
+                    }
                 }
             }
         }
@@ -162,25 +183,32 @@ button {
             >.article-single {
                 float: left;
                 display: block;
+                text-align: center;
                 width: calc(100% - 6px);
                 margin: 3px;
                 >h2 {
                     font-size: .82em;
+                    display: block;
+                    text-align: left;
+                    width: 100%;
                     >a {
                         text-decoration: none;
                         color: #e74c3c;
-                        font-family: 'Saira Condensed',Arial,sans-serif;
+                        font-family: 'Saira Condensed', Arial, sans-serif;
                     }
                 }
-                > a{
+                >a {
                     text-decoration: none;
                     img {
-                    max-width: calc(100% - 8px);
-                    margin: 4px;
-                    border-radius: 3px;
-                    box-shadow: 0 0 8px 0 #eaeaea;
+                        max-width: calc(100% - 8px);
+                        margin: 4px auto;
+                        border-radius: 3px;
+                        box-shadow: 0 0 8px 0 #eaeaea;
+                        @media(max-width: 480px) {
+                            width: 100% !important;
+                        }
+                    }
                 }
-            }
             }
         }
         @media(max-width: 600px) {
@@ -239,10 +267,10 @@ button {
     }
 }
 
-.article-body{
+.article-body {
     a {
         text-decoration: none !important;
         color: #e74c3c !important;
         font-family: inherit;
-     }
- }
+    }
+}
