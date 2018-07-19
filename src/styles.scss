@@ -29,10 +29,17 @@ button {
 
 .starmag-header {
     font-family: 'Pattaya', sans-serif;
+    position: fixed;
+    display: block;
+    width: 100%;
+    z-index: 1090;
+    top: 0;
+    left: 0;
     >header {
         width: calc(100% - 12px);
         box-shadow: 0 -1px 6px 0 #eaeaea;
-        background: #e74c3c;
+        background: rgba(231, 76, 60, 0.94);
+        box-shadow: 0 -1px 12px 0 #eaeaea;
         color: #f8f8f8;
         height: 30px;
         padding: 2px 6px;
@@ -168,7 +175,7 @@ button {
     display: block;
     width: calc(100% - 16px);
     float: left;
-    margin: 12px 8px 42px 8px;
+    margin: 42px 8px 42px 8px;
     padding: 0;
     >div {
         float: left;
