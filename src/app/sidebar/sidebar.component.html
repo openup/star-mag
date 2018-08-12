@@ -1,9 +1,4 @@
-<div class="block t-a c" ngNonBindable id="GoogleSideAds">
-    <ins class="adsbygoogle" style="display:block" 
-         data-ad-client="ca-pub-1124828165040329" 
-         data-ad-slot="8700417336" 
-         data-ad-format="auto"></ins>
-</div>
+<div class="block t-a c" ngNonBindable id="GoogleSideAds"></div>
 <div *ngFor="let a of related" class="animated fadeIn article-single" (click)="scrollTop()">
 <h2><a [innerHTML]="a.title" [routerLink]="['/article', a.id, a.slug]"  [title]="a.title"></a></h2>
 <a [routerLink]="['/article', a.id, a.slug]"  [title]="a.title">

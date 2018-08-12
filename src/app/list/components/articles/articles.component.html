@@ -11,7 +11,12 @@
         <p [innerHTML]="art.description"></p>
 </div>
 
-<div *ngIf="!loading" class="pagination animated fadeIn">
+<div *ngIf="!data.length && !loading"  class="zero-results block t-a c fadeIn animated">
+                <i class="fa fa-3x fa-exclamation"></i>
+       <span class="block t-a c">No Data Found !</span> 
+</div>
+
+<div *ngIf="!loading && data.length" class="pagination animated fadeIn">
      <a class="t-a c" (click)="scrollTop()" [class.disabled]="previousIsDisabled" [routerLink]="[path, 'p', previouspage]" title="page {{previouspage}}">Previous</a>
      <a class="t-a c" (click)="scrollTop()" [class.disabled]="nextIsDisabled" [routerLink]="[path, 'p', nextpage]" title="page {{nextpage}}">Next</a>
 </div>

@@ -5,10 +5,15 @@ import { ArticleComponent } from './article.component';
 
 const articleRoutes: Route[] = [
     {
-
         path: '',
         component: ArticleComponent
-    }, {
+    },
+     {
+        path: 'style/:id/:slug',
+        component: ArticleComponent,
+        data : [{lm : true}]
+    },
+     {
         path: ':id',
         component: ArticleComponent
     },
@@ -16,6 +21,7 @@ const articleRoutes: Route[] = [
         path: ':id/:slug',
         component: ArticleComponent
     }
+
 
 
 ];

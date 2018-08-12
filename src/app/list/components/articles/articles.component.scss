@@ -47,6 +47,16 @@
     }
 }
 
+.zero-results{
+    margin: 3.5em auto;
+    color: #666;
+    font-size: 1.1em;
+    line-height: 2.3;
+    > i{
+        color: #ffc107;
+    }
+}
+
 .pagination{
     display : flex;
 	flex-direction: row;

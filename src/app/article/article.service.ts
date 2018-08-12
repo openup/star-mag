@@ -11,7 +11,7 @@ export class ArticleService {
     }
 
     private url = 'https://api.star-mag.co.uk/article/id/'
-
+    private lm = 'https://api.star-mag.co.uk/style/';
 
 
     getArticle(id: number): Observable<any> {
@@ -22,6 +22,16 @@ export class ArticleService {
     }
 
   
+      getLmArticle(id?: number): Observable<any> {
+          let ulm = this.lm;
+        if(id)
+        	 ulm+='id/'+id;
+         else
+             ulm+='page/1';
+        return this.http.get(ulm);
+
+    }
+
 
 
 

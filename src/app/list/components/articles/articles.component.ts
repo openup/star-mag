@@ -48,8 +48,9 @@ export class ArticlesComponent implements OnInit {
         this.data = [];
         this.listService.getList(this.page, this.q).subscribe((res) => {
             this.data = res.map((obj) => {
-                obj.thumb = obj.thumb.replace('$width', 420).replace('$height', 360);
-                obj['slug'] = obj.title.toLowerCase().replace(/[^a-z0-9]+|\s+/gmi, " ").trim().replace(/ /g, '-')
+                obj.thumb = obj.thumb.replace('$width', 480).replace('$height', 360);
+                obj['slug'] = obj.title.toLowerCase().replace(/[^a-z0-9]+|\s+/gmi, " ").trim().replace(/ /g, '-');
+                obj['title'] = obj.title.trim();
                 return obj;
             });
             if(this.data.length < 12){
@@ -61,7 +62,11 @@ export class ArticlesComponent implements OnInit {
                 this.nextIsDisabled = false;
             }
             this.loading = false;
-        })
+        }, 
+     (error) => {
+         this.loading = false;
+         console.log(error);
+     })
     }
 
     scrollTop(){

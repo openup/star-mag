@@ -43,3 +43,45 @@
 }
 
 }
+
+
+.lm-posts{
+    list-style: none;
+    padding: 0;
+    display: flex;
+    font-family: 'Saira Condensed', Arial, sans-serif;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+   > div{
+    width: calc(50% - 24px);
+    transition: .3s;
+    display: inline-block;
+    flex : none;
+    align-self: auto;
+    text-align: left;
+    padding : 12px;
+    @media(max-width: 600px) {
+        width: calc(100% - 24px);
+        >h2 {
+            font-size: 1.05em;
+        }
+    }
+     img{
+        max-width: 100%;
+        border-radius: 3px;
+        box-shadow: 0 0 8px 0 #eaeaea;
+    }
+
+    > h2{
+        display: block;
+        margin-top: 6px;
+        font-size: 1.4em;
+        > a{
+            text-decoration: none;
+            color: #666;
+        }
+    }
+   } 
+}

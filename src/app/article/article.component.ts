@@ -9,26 +9,36 @@ import { GlobalAction } from '../actions.service';
     styleUrls: ['./article.component.scss']
 })
 
-export class ArticleComponent implements OnDestroy {
+export class ArticleComponent implements OnDestroy{
     public id: number;
     public data: Array<{}>;
     public loading: boolean = false;
+    public lmData : Array<{}>;
+    public isStyle : boolean = false;
 
     constructor(private activeRoute: ActivatedRoute, 
                 public articleService: ArticleService, 
                 private meta: Meta,
                 private globalAction : GlobalAction,
                 public route : Router) {
+
         this.activeRoute.params.subscribe(res => {
+            this.isStyle = (activeRoute.snapshot.data[0] && activeRoute.snapshot.data[0]['lm']) ? true : false;
+            this.removeMetaImage();
             this.id = res['id'];
             this.loadData();
+            this.lm();
 
+            if(!this.id || isNaN(this.id))
+                this.route.navigateByUrl('');
         })
     }
 
     loadData() {
         this.loading = true;
-        this.articleService.getArticle(this.id).subscribe(res => {
+        if(!this.isStyle)
+        {
+        this.articleService.getArticle(this.id).subscribe((res) => {
             this.data = res[0];
             this.data['html'] = this.parseHTML(this.data['html']);
             this.loading = false;
@@ -43,12 +53,58 @@ export class ArticleComponent implements OnDestroy {
             document.title = this.parseHtmlEntities(this.data['title']) + ' | Star Magazine';
             setTimeout(() => {
             this.addListener();
-            }, 1200);
-        })
+            }, 999);
+        });
+   }
+    else{
+      this.articleService.getLmArticle(this.id).subscribe((res) => {
+      this.data = res.post;
+
+           this.data['html'] = this.data['content']['data'].filter(c => c.type == 'text').map(e => e.data.text).join('');
+           this.data['image'] = this.data['image_url'];
+           this.data['title'] = this.data['name'];
+
+            this.meta.updateTag({ name: 'title', content: this.parseHtmlEntities(this.data['title']) + ' | Star Magazine', charset: 'utf-8' });
+            this.meta.updateTag({ name: 'description', content: this.parseHtmlEntities(this.data['description']).substring(0, 160) + '...', charset: 'utf-8' });
+            this.meta.updateTag({ name: 'twitter:title', content: this.parseHtmlEntities(this.data['title']) + ' | Star Magazine', charset: 'utf-8' });
+            this.meta.updateTag({ name: 'twitter:description', content: this.parseHtmlEntities(this.data['description']).substring(0, 160) + '...', charset: 'utf-8' });
+            this.meta.addTag({ name: 'twitter:image', content: this.data['image'] });
+            document.title = this.parseHtmlEntities(this.data['title']) + ' | Star Magazine';
+
+        this.loading = false;
+       this.globalAction.RelatedArticleStat('features');
+       window.scroll({
+                top: 0, 
+                left: 0, 
+                behavior: 'smooth' 
+              });
+      })
+    } 
     }
 
+
+    lm(){
+     this.articleService.getLmArticle().subscribe(res => {
+       this.lmData = res.posts.map(p => {
+           let img = p.image_url.split('?')[0];
+               img = img + '?fit=crop&fm=jpg&h=225&ixjsv=1.1.1&q=74&w=320';
+            p.image_url = img;
+            return p;
+       }).sort(() => Math.random() - .5);
+     })
+    }
+
+
     ngOnDestroy() {
-        this.meta.removeTag('name="twitter:image"');
+        this.removeMetaImage();
+    }
+
+    removeMetaImage(){
+      this.meta.removeTag('name="twitter:image"');
+            let timg = document.head.querySelectorAll('[name="twitter:image"]');
+        if(timg.length)
+        for(var i=0; i<timg.length; i++)
+           timg[i].remove();
     }
 
     parseHTML(html){
@@ -58,7 +114,6 @@ export class ArticleComponent implements OnDestroy {
       
       while((link = regex.exec(html)) !== null) {
         let anchor = link[2];
-        console.log(link)
         if(anchor.match('eonline.com')){
            let reg = /(\/\d+(\.\d)*)/gi;
            let id = anchor.match(reg)[0];
@@ -81,9 +136,14 @@ export class ArticleComponent implements OnDestroy {
 
 
    loadAdsScript(){
+    var adsAh = document.getElementById('googleAds');
+        adsAh.innerHTML = '<ins class="adsbygoogle" style="display:block" '+ 
+     ' data-ad-client="ca-pub-1124828165040329" '+ 
+     ' data-ad-slot="8700417336" ' +
+     ' data-ad-format="auto"></ins>';
     var s = document.createElement('script');
         s.text = '(adsbygoogle=window.adsbygoogle||[]).push({});';
-        document.getElementById('googleAds').appendChild(s);
+        adsAh.appendChild(s);
    }
 
     addListener(){
