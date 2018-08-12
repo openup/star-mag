@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { GlobalAction } from '../actions.service';
+import { GlobalAction } from '../utilities/actions.service';
 
 
 @Component({

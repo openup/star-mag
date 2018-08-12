@@ -8,10 +8,12 @@ import { appRouting } from './app.route';
 import { ErrorComponent } from './error/error.component';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { GlobalAction } from './actions.service';
+import { GlobalAction } from './utilities/actions.service';
 import { SideBarComponent } from './sidebar/sidebar.component';
 
 
+import { PipesModule } from './utilities/pipes/pipes.module';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,8 +27,10 @@ import { SideBarComponent } from './sidebar/sidebar.component';
     RouterModule,
     appRouting,
     HttpClientModule,
-    FormsModule
+    FormsModule, 
+    PipesModule
   ],
+  exports : [PipesModule],
   providers: [GlobalAction],
   bootstrap: [AppComponent]
 })

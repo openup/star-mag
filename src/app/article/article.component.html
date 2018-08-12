@@ -10,7 +10,15 @@
 </div>
 <!-- StarMag Responsive -->
 <div class="block t-a c" ngNonBindable id="googleAds"></div>
-<div [innerHTML]="data['html']" class="t-a j article-body"></div>
+<ng-container *ngFor="let d of data['html']" >
+<div *ngIf="d.type == 'iframe'"  class="t-a c article-body">
+	<iframe [src]="d.data.src|safe" width="100%"></iframe>
+</div>
+<div *ngIf="d.type == 'text'" [innerHTML]="d.data.text" class="t-a j article-body"></div>
+<div *ngIf="d.type == 'imagewithcaption'" class="t-a c article-body">
+<img [src]="d.data.file.s3_url|safe" />
+</div>
+</ng-container>
 </article>
 
 <div class="lm-posts">

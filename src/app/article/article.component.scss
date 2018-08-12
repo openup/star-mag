@@ -24,7 +24,13 @@
     line-height: 1.4;
     font-size: .88em;
     font-family: 'Open Sans',Arial,sans-serif;
-
+    
+    iframe{
+        width: 100%;
+        min-height: 320px;
+        border: none;
+        background: transparent;
+    }
     a {
         text-decoration: none !important;
         color: #e74c3c !important;

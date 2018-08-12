@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { articleRouting } from './article.route';
 import { ArticleComponent } from './article.component';
 import { ArticleService } from './article.service';
+import { PipesModule } from '../utilities/pipes/pipes.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ArticleService } from './article.service';
   imports: [
     CommonModule,
     articleRouting,
-    HttpClientModule
+    HttpClientModule,
+    PipesModule
   ],
   providers: [ArticleService]
 })

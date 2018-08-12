@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterContentInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { GlobalAction } from '../actions.service';
+import { GlobalAction } from '../utilities/actions.service';
 
 @Component({
     selector: '.site-sidebar',

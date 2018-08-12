@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from './article.service';
 import { Meta } from '@angular/platform-browser';
-import { GlobalAction } from '../actions.service';
+import { GlobalAction } from '../utilities/actions.service';
 
 @Component({
     templateUrl: './article.component.html',
@@ -40,7 +40,7 @@ export class ArticleComponent implements OnDestroy{
         {
         this.articleService.getArticle(this.id).subscribe((res) => {
             this.data = res[0];
-            this.data['html'] = this.parseHTML(this.data['html']);
+            this.data['html'] = [{data : {text  : this.parseHTML(this.data['html'])}, type : 'text'}];
             this.loading = false;
             let related = this.data['related'].split('latest.xml?category=')[1];
             if(related.length>0)
@@ -60,7 +60,7 @@ export class ArticleComponent implements OnDestroy{
       this.articleService.getLmArticle(this.id).subscribe((res) => {
       this.data = res.post;
 
-           this.data['html'] = this.data['content']['data'].filter(c => c.type == 'text').map(e => e.data.text).join('');
+           this.data['html'] = this.data['content']['data']; //.filter(c => c.type == 'text').map(e => e.data.text).join('');
            this.data['image'] = this.data['image_url'];
            this.data['title'] = this.data['name'];
 
@@ -90,7 +90,7 @@ export class ArticleComponent implements OnDestroy{
                img = img + '?fit=crop&fm=jpg&h=225&ixjsv=1.1.1&q=74&w=320';
             p.image_url = img;
             return p;
-       }).sort(() => Math.random() - .5);
+       }).sort(() => Math.random() - .5).slice(0, 6);
      })
     }
 
