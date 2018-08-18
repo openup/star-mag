@@ -187,6 +187,12 @@ button {
         }
         &.site-sidebar {
             width: 30%;
+            &.site-sidebar[fixe]{
+               position: fixed;
+               right: 0;
+               bottom : 55px;
+            }
+            transition: .12s;
             >.article-single {
                 float: left;
                 display: block;

@@ -1,7 +1,8 @@
-<div class="block t-a c" ngNonBindable id="GoogleSideAds"></div>
+<div class="block t-a c" ngNonBindable id="GoogleSideAds" googleAds></div>
 <div *ngFor="let a of related" class="animated fadeIn article-single" (click)="scrollTop()">
 <h2><a [innerHTML]="a.title" [routerLink]="['/article', a.id, a.slug]"  [title]="a.title"></a></h2>
 <a [routerLink]="['/article', a.id, a.slug]"  [title]="a.title">
 <img [src]="a.image" [attr.alt]="a.title" />
 </a>
 </div>
+<div class="block t-a c" ngNonBindable id="GoogleSideAds" googleAds></div>
