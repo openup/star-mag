@@ -60,8 +60,19 @@ export class ArticleComponent implements OnDestroy{
       this.articleService.getLmArticle(this.id).subscribe((res) => {
       this.data = res.post;
 
-           this.data['html'] = this.data['content']['data']; //.filter(c => c.type == 'text').map(e => e.data.text).join('');
-           this.data['image'] = this.data['image_url'];
+           this.data['html'] = this.data['content']['data'].map(obj => {
+           if(obj.type == 'imagewithcaption'){
+             obj.data.file.s3_url = obj.data.file.s3_url.replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/') + '?fm=jpg&q=70&w=960';
+
+             let img = obj.data.file.imgix_url.split('?')[0];
+             if(img){
+               img = img.replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/');
+               obj.data.file.imgix_url = img + '?fm=jpg&q=70&w=960';
+             }
+           }
+           return obj;
+           });
+           this.data['image'] = this.data['image_url'].replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/') + '?fm=jpg&q=78&w=1200';
            this.data['title'] = this.data['name'];
 
             this.meta.updateTag({ name: 'title', content: this.parseHtmlEntities(this.data['title']) + ' | Star Magazine', charset: 'utf-8' });
@@ -85,9 +96,15 @@ export class ArticleComponent implements OnDestroy{
 
     lm(){
      this.articleService.getLmArticle().subscribe(res => {
+       if(this.isStyle){
+       let index = res.posts.find(o => o.id == this.id);
+       if(index) res.posts.splice(res.posts.indexOf(index), 1);
+       }
+       
        this.lmData = res.posts.map(p => {
            let img = p.image_url.split('?')[0];
-               img = img + '?fit=crop&fm=jpg&h=225&ixjsv=1.1.1&q=74&w=320';
+               img = img.replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/');
+               img = img + '?fit=crop&fm=jpg&h=225&q=72&w=320';
             p.image_url = img;
             return p;
        }).sort(() => Math.random() - .5).slice(0, 6);
