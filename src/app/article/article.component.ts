@@ -97,8 +97,8 @@ export class ArticleComponent implements OnDestroy{
     lm(){
      this.articleService.getLmArticle().subscribe(res => {
        if(this.isStyle){
-       let index = res.posts.find(o => o.id == this.id);
-       if(index) res.posts.splice(res.posts.indexOf(index), 1);
+       let index = res.posts.findIndex(o => o.id == this.id);
+       if(index) res.posts.splice(index, 1);
        }
        
        this.lmData = res.posts.map(p => {
