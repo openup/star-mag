@@ -67,7 +67,7 @@ export class ArticleComponent implements OnDestroy{
              let img = obj.data.file.imgix_url.split('?')[0];
              if(img){
                img = img.replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/');
-               obj.data.file.imgix_url = img + '?fm=jpg&q=70&w=960';
+               obj.data.file.imgix_url = img + '?fm=jpg&q=78&w=960';
              }
            }
            return obj;

@@ -14,6 +14,9 @@
 <div *ngIf="d.type == 'iframe'"  class="t-a c article-body">
 	<iframe [src]="d.data.src|safe" width="100%"></iframe>
 </div>
+<div *ngIf="d.type == 'video'"  class="t-a c article-body">
+	<video [src]="d.data.file.original_url|safe" width="100%"></video>
+</div>
 <div *ngIf="d.type == 'text'" [innerHTML]="d.data.text" class="t-a j article-body"></div>
 <div *ngIf="d.type == 'imagewithcaption'" class="t-a c article-body">
 <img [src]="d.data.file.imgix_url|safe" [alt]="data['title']" />
