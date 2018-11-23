@@ -4,11 +4,11 @@
         </div>
         
 <div *ngFor="let art of data; let i = index;" [ngClass]="i%2?'fadeInRight':'fadeInLeft'" class="article-single animated"
-[class.img-hidden]="i>2">
+[class.img-hidden]="i>3">
         <h2><a (click)="scrollTop()" [title]="art.title" [innerHTML]="art.title" [routerLink]="['/article', art.id, art.slug]"></a></h2>
         <a (click)="scrollTop()" [title]="art.title" [routerLink]="['/article', art.id, art.slug]">
-                <img *ngIf="i<2" [src]="art.thumb" [alt]="art.title" class="animated fadeIn" />
-                <img *ngIf="i>2" src="./assets/images/preview.png" [attr.data-src]="art.thumb" [alt]="art.title" class="animated fadeIn" />
+                <img *ngIf="i<4" [src]="art.thumb" [alt]="art.title" class="animated fadeIn" />
+                <img *ngIf="i>3" src="./assets/images/preview.png" [attr.data-src]="art.thumb" [alt]="art.title" />
         </a>
         <p [innerHTML]="art.description"></p>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ListService } from '../../list.service';
+import { createElement } from '@angular/core/src/view/element';
 
 
 @Component({
@@ -44,13 +45,10 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
 
     ngAfterViewInit(){
         let c = this;
-        const w_width = window.innerWidth;
         const w_height = window.innerHeight;
-        if(w_width<800){
         document.addEventListener('scroll', (e : Event) => {
         let scroll_top = window.scrollY;
         let bottomScroll = scroll_top + w_height;
-        console.log('Bottom Scroll : ', bottomScroll)
         let imgs = c.elem.nativeElement.querySelectorAll('.article-single.img-hidden');
         imgs.forEach(i => {
             let iot = i.offsetTop;
@@ -58,12 +56,23 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
                 i.classList.remove("img-hidden");
                 let img = i.querySelector('img');
                 let src = img.getAttribute('data-src');
-                img.setAttribute('src', src);
+                    img.setAttribute('src', './assets/images/fetching.gif');
+                var tmpImg = document.createElement('img');
+                    tmpImg.className='hidden d-none';
+                    tmpImg.setAttribute("width", "0");
+                    tmpImg.setAttribute("height", "0");
+                    tmpImg.setAttribute('src', src);
+
+                    tmpImg.addEventListener('load', () => {
+                    img.setAttribute('src', src);
+                    img.setAttribute("class", "animated fadeIn");
+                    tmpImg.remove();
+                });
             }
         });
 
         });
-      }
+      
     }
 
     loadData() {
@@ -71,7 +80,10 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
         this.data = [];
         this.listService.getList(this.page, this.q).subscribe((res) => {
             this.data = res.map((obj) => {
-                obj.thumb = obj.thumb.replace('$width', 480).replace('$height', 360);
+                obj.thumb = obj.thumb.replace('$width', 480)
+                                     .replace('$height', 360)
+                                     .replace(/\/\//g, '\/')
+                                     .replace('https:/', 'https://');
                 obj['slug'] = obj.title.toLowerCase().replace(/[^a-z0-9]+|\s+/gmi, " ").trim().replace(/ /g, '-');
                 obj['title'] = obj.title.trim();
                 return obj;
