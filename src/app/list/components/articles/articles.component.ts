@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ListService } from '../../list.service';
 
@@ -8,7 +8,7 @@ import { ListService } from '../../list.service';
     styleUrls: ['./articles.component.scss']
 })
 
-export class ArticlesComponent implements OnInit {
+export class ArticlesComponent implements OnInit, AfterViewInit {
     public q: any;
     public data: Array<{}>;
     public loading : boolean = true;
@@ -19,7 +19,7 @@ export class ArticlesComponent implements OnInit {
     public nextIsDisabled : boolean = false;
     public previousIsDisabled : boolean = false;
 
-    constructor(private activeRoute: ActivatedRoute, public listService: ListService) {
+    constructor(private activeRoute: ActivatedRoute, public listService: ListService, private elem : ElementRef) {
         this.activeRoute.params.subscribe(res => {
             this.q = res['query'];
             this.page = res['p'] || 1;
@@ -33,14 +33,37 @@ export class ArticlesComponent implements OnInit {
               this.path = '/category/'  + this.q;
             
              this.previousIsDisabled = this.page < 2 ? true : false;
-            console.log('qq :',this.q)
-            console.log(this.q * 1)
+
         })
         
     }
 
     ngOnInit() {
         this.loadData();
+    }
+
+    ngAfterViewInit(){
+        let c = this;
+        const w_width = window.innerWidth;
+        const w_height = window.innerHeight;
+        if(w_width<800){
+        document.addEventListener('scroll', (e : Event) => {
+        let scroll_top = window.scrollY;
+        let bottomScroll = scroll_top + w_height;
+        console.log('Bottom Scroll : ', bottomScroll)
+        let imgs = c.elem.nativeElement.querySelectorAll('.article-single.img-hidden');
+        imgs.forEach(i => {
+            let iot = i.offsetTop;
+            if(iot < bottomScroll){
+                i.classList.remove("img-hidden");
+                let img = i.querySelector('img');
+                let src = img.getAttribute('data-src');
+                img.setAttribute('src', src);
+            }
+        });
+
+        });
+      }
     }
 
     loadData() {

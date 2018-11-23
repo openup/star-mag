@@ -24,6 +24,11 @@
         border-radius: 4px;
         margin: 4px 6px 4px auto;
     }
+    &.img-hidden{
+        img{
+            display: none;
+        }
+    }
     >p {
         float: left;
         display: block;
