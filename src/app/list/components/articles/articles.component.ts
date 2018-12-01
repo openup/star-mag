@@ -65,7 +65,6 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
 
                     tmpImg.addEventListener('load', () => {
                     img.setAttribute('src', src);
-                    img.setAttribute("class", "animated fadeIn");
                     tmpImg.remove();
                 });
             }
