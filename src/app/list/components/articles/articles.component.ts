@@ -65,7 +65,6 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
 
                     tmpImg.addEventListener('load', () => {
                     img.setAttribute('src', src);
-                    img.setAttribute("class", "animated fadeIn");
                     tmpImg.remove();
                 });
             }
@@ -78,10 +77,16 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
     loadData() {
         this.loading = true;
         this.data = [];
+        const w_width = window.innerWidth;
+        const init_w = 480;
+        
+        const d_w = init_w >= w_width ? w_width - 50 : init_w;
+        const d_h = Math.round(d_w * 0.75);
+            
         this.listService.getList(this.page, this.q).subscribe((res) => {
             this.data = res.map((obj) => {
-                obj.thumb = obj.thumb.replace('$width', 480)
-                                     .replace('$height', 360)
+                obj.thumb = obj.thumb.replace('$width', d_w)
+                                     .replace('$height', d_h)
                                      .replace(/\/\//g, '\/')
                                      .replace('https:/', 'https://');
                 obj['slug'] = obj.title.toLowerCase().replace(/[^a-z0-9]+|\s+/gmi, " ").trim().replace(/ /g, '-');

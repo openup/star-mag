@@ -62,17 +62,17 @@ export class ArticleComponent implements OnDestroy{
 
            this.data['html'] = this.data['content']['data'].map(obj => {
            if(obj.type == 'imagewithcaption'){
-             obj.data.file.s3_url = obj.data.file.s3_url.replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/') + '?fm=jpg&q=70&w=960';
+             obj.data.file.s3_url = obj.data.file.s3_url.replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/') + (obj.data.file.s3_url.indexOf('?')>-1 ? '&':'?')  +'fm=jpg&q=70&w=960';
 
              let img = obj.data.file.imgix_url.split('?')[0];
              if(img){
                img = img.replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/');
-               obj.data.file.imgix_url = img + '?fm=jpg&q=78&w=960';
+               obj.data.file.imgix_url = img +  (img.indexOf('?')>-1 ? '&':'?') + 'fm=jpg&q=78&w=960';
              }
            }
            return obj;
            });
-           this.data['image'] = this.data['image_url'].replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/') + '?fm=jpg&q=78&w=1200';
+           this.data['image'] = this.data['image_url'].replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/') +  (this.data['image_url'].indexOf('?')>-1 ? '&':'?') + 'fm=jpg&q=78&w=1200';
            this.data['title'] = this.data['name'];
 
             this.meta.updateTag({ name: 'title', content: this.parseHtmlEntities(this.data['title']) + ' | Star Magazine', charset: 'utf-8' });
@@ -104,7 +104,7 @@ export class ArticleComponent implements OnDestroy{
        this.lmData = res.posts.map(p => {
            let img = p.image_url.split('?')[0];
                img = img.replace('http://love.imgix.net/post/', 'https://media.star-mag.co.uk/new-style/');
-               img = img + '?fit=crop&fm=jpg&h=225&q=72&w=320';
+               img = img +  (img.indexOf('?')>-1 ? '&':'?')  + 'fit=crop&fm=jpg&h=225&q=72&w=320';
             p.image_url = img;
             return p;
        }).sort(() => Math.random() - .5).slice(0, 6);
